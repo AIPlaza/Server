@@ -1,4 +1,4 @@
-# enable-ssh-cleaned.ps1
+# enable-ssh-complete.ps1
 # ------------------------------------------
 # Configuración completa de SSH en Windows 10/11
 # EJECUTAR COMO ADMINISTRADOR
