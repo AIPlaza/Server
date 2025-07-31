@@ -48,7 +48,6 @@ if ([string]::IsNullOrEmpty($PasswordSSH)) {
 # Paso 5: Crear usuario SSH dedicado
 Write-Host "`n👤 Creando usuario SSH: $UsuarioSSH"
 try {
-    # Verificar si el usuario ya existe
     $existeUsuario = Get-LocalUser -Name $UsuarioSSH -ErrorAction SilentlyContinue
     if ($existeUsuario) {
         Write-Host "⚠️ Usuario $UsuarioSSH ya existe, actualizando contraseña..." -ForegroundColor Yellow
@@ -59,11 +58,8 @@ try {
         New-LocalUser -Name $UsuarioSSH -Password $SecurePassword -Description "Usuario SSH para gestión remota"
         Write-Host "✅ Usuario $UsuarioSSH creado correctamente" -ForegroundColor Green
     }
-    
-    # Agregar usuario al grupo de administradores locales
     Add-LocalGroupMember -Group "Administradores" -Member $UsuarioSSH -ErrorAction SilentlyContinue
     Write-Host "✅ Usuario agregado al grupo Administradores" -ForegroundColor Green
-    
 } catch {
     Write-Host "❌ Error creando usuario: $($_.Exception.Message)" -ForegroundColor Red
 }
@@ -95,14 +91,13 @@ Write-Host "`n🔍 Verificando configuración..."
 $EstadoSSH = Get-Service sshd
 Write-Host "📊 Estado del servicio SSH: $($EstadoSSH.Status)" -ForegroundColor Cyan
 
-# Paso 9: Generar archivo de credenciales para enviar al headquarter
+# Paso 9: Generar archivo de credenciales
 $CredencialesJSON = $InfoSistema | ConvertTo-Json -Depth 2
 $ArchivoCredenciales = "ssh-credentials-$($InfoSistema.NombreEquipo).json"
 $CredencialesJSON | Out-File -FilePath $ArchivoCredenciales -Encoding UTF8
-
 Write-Host "`n📄 Archivo de credenciales generado: $ArchivoCredenciales" -ForegroundColor Green
 
-# Paso 10: Mostrar resumen de configuración
+# Paso 10: Mostrar resumen
 Write-Host "`n" + "="*60 -ForegroundColor Cyan
 Write-Host "🎉 CONFIGURACIÓN SSH COMPLETADA" -ForegroundColor Green
 Write-Host "="*60 -ForegroundColor Cyan
@@ -115,7 +110,6 @@ Write-Host "🚪 Puerto: $($InfoSistema.Puerto)" -ForegroundColor White
 Write-Host "📅 Configurado: $($InfoSistema.FechaConfiguracion)" -ForegroundColor White
 Write-Host "="*60 -ForegroundColor Cyan
 
-# Paso 11: Comando de conexión para copiar
 $ComandoConexion = "ssh $($InfoSistema.UsuarioSSH)@$($InfoSistema.IPPublica)"
 Write-Host "`n📋 COMANDO PARA CONECTAR DESDE HEADQUARTER:" -ForegroundColor Cyan
 Write-Host $ComandoConexion -ForegroundColor Yellow
