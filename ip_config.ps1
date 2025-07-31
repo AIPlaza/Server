@@ -1,7 +1,7 @@
 
 # ╭────────────────────────────────────────────╮
 # │ Configuración Automática de IP Estática    │
-# │ Autor: ChatGPT para TECHNOPLAY             │
+# │ Autor:CRYPTOPLAZA             │
 # ╰────────────────────────────────────────────╯
 
 function Obtener-AdaptadorEthernet {
