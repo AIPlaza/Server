@@ -1,25 +1,27 @@
 @echo off
 color 0A
-title Habilitar Hyper-V en Windows 10/11 Home Edition
+title Activar soporte Hyper-V en Windows 10/11 Home
 
-echo ================================================
-echo HABILITANDO HYPER-V EN WINDOWS HOME
-echo ================================================
+echo =================================================
+echo ACTIVANDO Hyper-V EN WINDOWS HOME (NO SOPORTADO)
+echo =================================================
 
-echo Este proceso puede tardar unos minutos...
-echo.
+echo Paso 1: Descargando componentes ocultos...
 
-dism /online /enable-feature /featurename:Microsoft-Hyper-V-All /all /quiet /norestart
-dism /online /enable-feature /featurename:Microsoft-Hyper-V /all /quiet /norestart
-dism /online /enable-feature /featurename:Microsoft-Hyper-V-Management-Clients /all /quiet /norestart
-dism /online /enable-feature /featurename:Microsoft-Hyper-V-Management-PowerShell /all /quiet /norestart
-dism /online /enable-feature /featurename:Microsoft-Hyper-V-Hypervisor /all /quiet /norestart
-dism /online /enable-feature /featurename:Microsoft-Hyper-V-Services /all /quiet /norestart
-dism /online /enable-feature /featurename:Microsoft-Hyper-V-Tools-All /all /quiet /norestart
+pushd "%~dp0"
+dir /b %SystemRoot%\servicing\Packages\*Hyper-V*.mum >hyperv.txt
+for /f %%i in ('findstr /i . hyperv.txt 2^>nul') do (
+    echo Instalando: %%i
+    dism /online /norestart /add-package:"%SystemRoot%\servicing\Packages\%%i"
+)
+del hyperv.txt
 
-echo.
-echo ================================================
-echo HYPER-V HABILITADO (si no hay errores)
-echo ES RECOMENDABLE REINICIAR EL SISTEMA AHORA
-echo ================================================
+echo Paso 2: Habilitando características Hyper-V...
+
+dism /online /enable-feature /featurename:Microsoft-Hyper-V-All /all /norestart
+dism /online /enable-feature /featurename:Microsoft-Hyper-V-Management-PowerShell /all /norestart
+
+echo =================================================
+echo 🔁 HYPER-V INSTALADO. REINICIA TU PC PARA FINALIZAR
+echo =================================================
 pause
