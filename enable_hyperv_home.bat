@@ -1,6 +1,6 @@
 @echo off
 color 0A
-title 🧠 Activar Hyper-V + WSL + VirtualMachinePlatform (Windows 10/11 Home)
+title  Activar Hyper-V + WSL + VirtualMachinePlatform (Windows 10/11 Home)
 
 echo ===============================================
 echo PASO 1: Desbloqueando Hyper-V en Windows Home...
@@ -33,7 +33,7 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /norestart
 
 echo.
 echo ===============================================
-echo ✅ PROCESO COMPLETO
-echo 🔁 REINICIA TU EQUIPO AHORA
+echo PROCESO COMPLETADO
+echo REINICIA TU EQUIPO AHORA
 echo ===============================================
 pause
