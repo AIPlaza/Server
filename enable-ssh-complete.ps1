@@ -5,7 +5,7 @@
 # ------------------------------------------
 
 param(
-    [string]$UsuarioSSH = "matrixnode",
+    [string]$UsuarioSSH = "node2",
     [string]$PasswordSSH = "",
     [string]$NombreMiniPC = ""
 )
